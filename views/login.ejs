@@ -1,0 +1,49 @@
+<div class="wrapper container  w-50 mt-lg-5">
+
+  <form action="/login" method="POST" class="needs-validation" novalidate>
+
+    <h2 class="mb-3 ">Log In </h2>
+    <div class="form-group mb-4">
+      <label for="emailAddress">Email:</label>
+      <input type="email" class="form-control shadow-sm" id="emailAddress" placeholder="Enter email" name="emailAddress"
+        required>
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
+    </div>
+    <div class="form-group mb-4">
+      <label for="password">Password:</label>
+      <input type="password" class="form-control shadow-sm" id="password" placeholder="Enter password" name="password"
+        required>
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
+    </div>
+    <div class="custom-control custom-checkbox mb-4 mt-4">
+      <input type="checkbox" class="custom-control-input" id="customCheck" name="example1">
+      <label class="custom-control-label" for="customCheck">Remember Me</label>
+    </div>
+    <div class="mx-auto">
+      <button type="submit" class="btn btn-dark ">Submit</button>
+    </div>
+
+  </form>
+</div>
+<script>
+  // Disable form submissions if there are invalid fields
+  (function () {
+    'use strict';
+    window.addEventListener('load', function () {
+      // Get the forms we want to add validation styles to
+      var forms = document.getElementsByClassName('needs-validation');
+      // Loop over them and prevent submission
+      var validation = Array.prototype.filter.call(forms, function (form) {
+        form.addEventListener('submit', function (event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+</script>

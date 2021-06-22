@@ -1,0 +1,280 @@
+<head>
+    <link rel="stylesheet" href="Profile.css">
+</head>
+
+
+
+<div class="profile-info container">
+
+    <div class="heading">
+        <h1>Profile</h1>
+
+    </div>
+    <% if (locals.messages) { %>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+        <% if (locals.messages.changePasswordSuccess) { %>
+            <script>
+                Toastify({
+                    text: "<%= locals.messages.changePasswordSuccess %>",
+                    duration: 3000,
+                    destination: "https://github.com/apvarun/toastify-js",
+                    newWindow: true,
+                    close: true,
+                    gravity: "top", // `top` or `bottom`
+                    position: "right", // `left`, `center` or `right`
+                    backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    onClick: function () { } // Callback after click
+                }).showToast();
+            </script>
+            <% }else if (locals.messages.changePasswordFail){ %>
+                <script>
+                    Toastify({
+                        text: "<%= locals.messages.changePasswordFail %>",
+                        duration: 3000,
+                        destination: "https://github.com/apvarun/toastify-js",
+                        newWindow: true,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: "right", // `left`, `center` or `right`
+                        backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        onClick: function () { } // Callback after click
+                    }).showToast();
+                </script>
+                <% } %>
+                    <% } %>
+                        <div class="personal-info">
+                            <h3>Personal Information</h3><a id="edit-profile-button" onclick='showUpdateForm()'
+                                href="#">Edit</a>
+                            <hr>
+                            <div id="information">
+
+                                <div class="row">
+                                    <h6>Full Name: </h6>
+                                    <p>
+                                        <%= user.firstName %>
+                                            <%= user.lastName %>
+                                    </p>
+
+                                </div>
+                                <div class="row">
+                                    <h6>Email Address: </h6>
+                                    <p>
+                                        <%= user.emailAddress %>
+                                    </p>
+
+                                </div>
+                                <div class="row">
+                                    <h6>Phoen Number: </h6>
+                                    <p>
+                                        <%= user.phone %>
+                                    </p>
+
+                                </div>
+                            </div>
+                            <form id="updateProfileInfoForm" action="/user/information/change?id=<%= user._id
+%>&_method=PUT" method="post" style="display: none;">
+                                <div class="form-group owner">
+                                    <label for="firstName">First Name</label>
+                                    <input type="text" class="form-control shadow-sm " value="<%= user.firstName %>"
+                                        id="firstName" placeholder="First Name" name="firstName">
+                                </div>
+                                <div class="form-group owner">
+                                    <label for="lastName">Last Name</label>
+                                    <input type="text" class="form-control shadow-sm" value="<%= user.lastName %>"
+                                        id="lastName" placeholder="Last Name" name="lastName">
+                                </div>
+                                <div class="form-group owner">
+                                    <label for="phoneNumber">Phone Number</label>
+                                    <input type="text" class="form-control shadow-sm" value="<%= user.phone %>"
+                                        id="phoneNumber" placeholder="Phone Number" name="phone">
+                                </div>
+                                <div class="form-group owner">
+                                    <label for="emailAddress">Email Address</label>
+                                    <input type="text" class="form-control shadow-sm" value="<%= user.emailAddress %>"
+                                        id="emailAddress" placeholder="Email Address" name="emailAddress">
+                                </div>
+                                <button type="submit" class="btn btn-default">Update</button>
+                            </form>
+
+
+
+
+                            <div class="row">
+                                <h6>Password: </h6>
+                                <p>****** <a href="#" onclick="$('#changePasswordForm').slideToggle()">(Change)</a></p>
+
+                                <form action="/user/password/change" method="post" id="changePasswordForm"
+                                    style="display: none;">
+                                    <div class="form-group owner">
+                                        <label for="ownerName">Old Password</label>
+                                        <input type="text" class="form-control" id="oldPassowrd" name="oldPassword">
+                                    </div>
+                                    <div class="form-group owner">
+                                        <label for="ownerName">New Password</label>
+                                        <input type="text" class="form-control" id="newPassowrd" name="newPassword">
+                                    </div>
+                                    <button type="submit" class="btn btn-default">Change</button>
+                                </form>
+                            </div>
+                        </div>
+
+
+                        <div class="payment-info">
+                            <h3>Payment Information</h3>
+                            <hr>
+
+
+
+
+                            <% if(!user.card) { %>
+                                <p>No Card has been added to your account.</p>
+                                <form action="/card/new" method="POST" id="updateCardForm">
+                                    <div class="form-group owner">
+                                        <label for="ownerName">Owner Name</label>
+                                        <input type="text" class="form-control" id="ownerName" name="ownerName"
+                                            placeholder="Owner's Full Name" required>
+                                    </div>
+
+                                    <div class="form-group" id="card-number-field">
+                                        <label for="cardNumber">Card Number</label>
+                                        <input type="text" class="form-control" id="cardNumber" name="cardNumber"
+                                            placeholder="1234 1234 1234 1234" required>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Expiration Date</label>
+                                                <input type="text" class="form-control" name="expiryDate"
+                                                    id="expiryDate" placeholder="MM/YYYY" required>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group CVV">
+                                                <label for="cvv">CVV</label>
+                                                <input type="text" class="form-control" id="cvv" name="cvv"
+                                                    placeholder="XXX" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="form-group button">
+                                        <button type="submit" class="btn btn-default" id="confirm-purchase">Create New
+                                            Card</button>
+                                    </div>
+
+                                </form>
+
+                                <% }else{ %>
+
+                                    <div class="row">
+                                        <h6>Owner Name: </h6>
+                                        <p>
+                                            <%= user.card.ownerName %>
+                                        </p>
+
+                                    </div>
+                                    <div class="row">
+                                        <h6>Credit Card Number: </h6>
+                                        <p>
+                                            **** **** **** <%= user.card.lastFourDigitsOfCardNumber() %>
+                                        </p>
+
+                                    </div>
+                                    <div class="row">
+                                        <h6>Expiry Date: </h6>
+                                        <p>
+                                            <%= user.card.expiryDate %>
+                                        </p>
+
+                                    </div>
+
+                                    <button class="btn btn-black" onclick="$('#updateCardForm').slideToggle()">Update
+                                        Card
+                                        Information</button>
+
+                                    <form action="/card/update" method="POST" id="updateCardForm"
+                                        style="display: none;">
+                                        <div class="form-group owner">
+                                            <label for="ownerName">Owner Name</label>
+                                            <input type="text" class="form-control" id="ownerName" name="ownerName"
+                                                value="<%= user.card.ownerName %>" required>
+                                        </div>
+
+                                        <div class="form-group" id="card-number-field">
+                                            <label for="cardNumber">Card Number</label>
+                                            <input type="text" class="form-control" id="cardNumber" name="cardNumber"
+                                                value="<%= user.card.cardNumber %>" placeholder="1234 1234 1234 1234"
+                                                required>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Expiration Date</label>
+                                                    <input type="text" class="form-control" name="expiryDate"
+                                                        id="expiryDate" placeholder="MM/YYYY"
+                                                        value="<%= user.card.expiryDate %>" required>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group CVV">
+                                                    <label for="cvv">CVV</label>
+                                                    <input type="text" class="form-control" id="cvv" name="cvv"
+                                                        placeholder="XXX" required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="form-group button">
+                                            <button type="submit" class="btn btn-default" id="confirm-purchase">Update
+                                                Existing
+                                                Card</button>
+                                        </div>
+
+                                    </form>
+
+                                    <% } %>
+
+                        </div>
+
+</div>
+
+
+<script>
+    document.getElementById('cardNumber').addEventListener('input', (e) => {
+
+        if (e.target.value.length <= 19) {
+            e.target.value = e.target.value.replace(/[^\dA-Z]/g, '').replace(/(.{4})/g, '$1 ').trim();
+        } else {
+            e.target.value = e.target.value.substr(0, 19);
+        }
+    });
+
+    document.getElementById('expiryDate').addEventListener('input', (e) => {
+
+        if (e.target.value.length <= 3) {
+            e.target.value = e.target.value.replace(/[^\dA-Z]/g, '').replace(/(.{2})/g, '$1/ ').trim();
+        } else {
+            e.target.value = e.target.value.substr(0, 7);
+        }
+    });
+
+    document.getElementById('cvv').addEventListener('input', (e) => {
+
+        if (e.target.value.length > 3) {
+            e.target.value = e.target.value.substr(0, 3);
+        }
+    });
+
+    function showUpdateForm() {
+        $('#updateProfileInfoForm').slideToggle();
+        $('#information').slideToggle();
+    }
+</script>

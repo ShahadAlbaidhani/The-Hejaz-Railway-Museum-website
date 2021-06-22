@@ -1,0 +1,95 @@
+
+
+
+
+.container{
+
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+margin-bottom: 3%;
+}
+
+
+.brcode {
+    font-family: 'Libre Barcode 128';
+
+    font-size: 60px;
+    font-weight: 900;
+    margin: 0;
+}
+p{
+    margin-bottom: 0;
+    font-size:35px;
+}
+.row{
+    padding: 0;
+    margin-bottom: 1%;
+    
+  
+}
+.box{
+    background-color: #000;
+    color: white;
+    padding: 2%;
+    width: 50%;
+}
+h4{
+    font-size: 18px;
+}
+.orderList{
+    padding: 2%;
+    margin: 5%;
+    background-color: #000;
+    color: white;
+
+}
+.hrCustmer{
+    margin-bottom: 2%;
+    color:white;
+    background-color: white;
+    height: 40%;
+}
+
+.heading {
+    font-weight: bolder;
+    font-size: 40px;
+    text-transform: capitalize;
+    color:black;
+    text-align: center;
+    margin: 3%;
+  }
+
+h4{
+    text-transform: capitalize;
+
+    font-weight: 700;
+}
+
+.btn-default {
+    background-color: rgb(0, 0, 0);
+    color: white;
+    padding: 14px 40px;
+    font-size: 20px;
+    border: none;
+    border-radius: 2%;
+  
+  
+  }
+
+  
+
+  .box{
+      margin-bottom: 3%;
+  }
+  .oder {
+    font-size: 20px;
+    font-weight:200;
+    margin: 0;
+  }
+  .brcodeOrders{
+    font-size: 35px;
+    font-weight:200;
+    margin: 0;
+  }

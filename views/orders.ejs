@@ -1,0 +1,124 @@
+<link rel="stylesheet" href="barcode-font.min.css">
+<script src="barcode-font.min.js"></script>
+<link href='https://fonts.googleapis.com/css?family=Libre Barcode 128' rel='stylesheet'>
+<link href="order.css" rel='stylesheet'>
+</head>
+
+<body>
+
+<!-- new Orders -->
+    <div class="container">
+        <% userOrders%>
+            <% if(checkout==true){ %>
+                <h1 class="heading">Your ticket has been booked successfully</h1>
+                <% if(!userOrders[userOrders.length-1]==0) {%>
+                    <% order=userOrders[userOrders.length-1]%>
+                    <% countTickets=1 %> 
+
+
+                        <% for (var l=order.tickets.length, j=0; j < l; j++) {%>
+                            <div class="box">
+                                <% ticket=order.tickets[j]%>
+                                    <h5>Number of Ticket <%= countTickets++ %>
+                                    </h5>
+                                    <h4> Type of Ticket : <%= ticket.ticketType %>
+                                    </h4>
+                                    <h4> Price : <%= ticket.price %> RS
+                                    </h4>
+                                    <h4> Date: <%= ticket.ticketDate.toISOString().slice(0,
+                                        19).replace('T', ' ' );%></h4>
+                                    
+                                        <div>
+                                            <p>
+                                                <%= ticket._id %>
+                                            </p>
+                                            <h1 class="brcode">
+                                                <%= ticket._id %>
+                                            </h1>
+                                        </div>
+                            </div>
+                            <hr>
+
+
+                            <% } %>
+
+                                <form method="POST" action="/orders/delete?id=<%= order.id %>&_method=DELETE">
+                                    <button class="btn-default" type="submit">cancel</button>
+
+
+                                </form>
+
+                                <% } %>
+                                    <% } %>
+
+    </div>
+
+
+<!-- order list -->
+
+    <div class="container">
+    
+    <% if(checkout==false) { %>
+
+        <h1 class="heading"> orders # <%= userOrders.length %></h1>
+
+            <% countOfOrder=1 %>
+                <%userOrders.forEach(order=>{%>
+                    <div class="box">
+                    <h4>Order No: <%= countOfOrder++; %>
+                    </h4>
+                    <h4>Order date :<%=
+                            order._id.getTimestamp().toISOString().slice(0,
+                            19).replace('T', ' ' ); %>
+                    </h4>
+
+                    <% total=0%>
+
+
+                        <div class="col">
+                            <h4> order summary</h4>
+                            <hr>
+                        </div>
+                        <%order.tickets.forEach(ticket=>{%>
+                            <div class="row">
+
+                                <div class="col">
+                                    <% total +=ticket.price%>
+                                        <%= ticket.ticketType %>
+                                </div>
+                                <div class="col">
+                                    <b>Rs <%= ticket.price %>
+                                        <%= ticket.date %></b>
+                                </div>
+                                <div class="row">
+                                    <p class="oder">
+                                        <%= ticket._id %>
+                                    </p>
+                                    <h1 class="brcode brcodeOrders">
+                                        <%= ticket._id %>
+                                    </h1>
+                                </div>
+                            </div>
+                            <%}) %>
+                                <div class="row">
+                                    <hr>
+                                    <div class="col">
+                        
+                                        <h4><b>Order Total</b></h4>
+                                    </div>
+                                    <div class="col">
+                                        <b> Rs <%= total %> </b>
+                                    </div>
+                                </div>
+
+                            </div>
+                                
+                                <%}) %>
+
+
+
+
+                                    <% } %>
+      
+
+    </div>

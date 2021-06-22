@@ -1,0 +1,180 @@
+<head>
+    <link rel="stylesheet" href="checkOut.css">
+</head>
+
+<div class="creditCardForm container">
+    <div class="heading">
+        <h1>Confirm Purchase</h1>
+    </div>
+
+    <div class="order-summary mt-6">
+        <h3>Order Summary:</h3>
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <h6>Tikcet Date:</h6>
+                <%= order.ticketDate%>
+            </div>
+            <div class="col-md-4">
+                <h6>Adults:</h6>
+                <%= order.adults%>x Adult Tickets
+                    <p>Price: <%= parseInt(order.adults) * 50 %> SAR</p>
+            </div>
+            <div class="col-md-4">
+                <h6>Children:</h6>
+                <%= order.children%>x Children Tickets
+                    <p>Price: <%= parseInt(order.children) * 25 %> SAR</p>
+            </div>
+        </div>
+        <h5>Total Price:</h5>
+        <p>
+            <%= parseInt(order.children) * 25 + parseInt(order.adults) * 50 %> SAR
+        </p>
+
+        <a href="/ticket?date=<%= order.ticketDate%>&adults=<%= order.adults%>&children=<%= order.children%>"
+            onclick="history.back()">Edit order</a>
+        <hr>
+
+    </div>
+
+
+
+
+    <div class="payment">
+
+        <h3>Payment Information: </h3>
+
+
+        <% if (user.card) { %>
+
+
+
+            <form method="POST" action="/checkout">
+                <input type="hidden" name="ticketDate" value="<%= order.ticketDate%>">
+                <input type="hidden" name="adults" value=" <%= order.adults%>">
+                <input type="hidden" name="children" value="<%= order.children%>">
+
+
+                <div class="form-group owner">
+                    <label for="ownerName">Owner Name</label>
+                    <input type="text" class="form-control" id="ownerName" name="ownerName"
+                        value="<%= user.card.ownerName %>" required>
+                </div>
+
+                <div class="form-group" id="card-number-field">
+                    <label for="cardNumber">Card Number</label>
+                    <input type="text" class="form-control" id="cardNumber" name="cardNumber"
+                        placeholder="XXXX XXXX XXXX XXXX" value="<%= user.card.cardNumber %>" required>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label>Expiration Date</label>
+                            <input type="text" class="form-control" name="expiryDate" id="expiryDate"
+                                value="<%= user.card.expiryDate %>" placeholder="MM/YYYY" required>
+
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group CVV">
+                            <label for="cvv">CVV</label>
+                            <input type="text" class="form-control" id="cvv" name="cvv" placeholder="XXX" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input class="form-check-input" type="checkbox" value="" id="updatePaymentInfo"
+                        name="updatePaymentInfo">
+                    <label class="form-check-label" for="updatePaymentInfo">
+                        Update Your Payment Information.
+                    </label>
+                </div>
+
+                <div class="form-group button">
+                    <button type="submit" class="btn btn-default" id="confirm-purchase">PAY &
+                        CONFIRM</button>
+                </div>
+            </form>
+
+            <% } else {%>
+                <form method="POST" action="/checkout">
+                    <input type="hidden" name="ticketDate" value="<%= order.ticketDate%>">
+                    <input type="hidden" name="adults" value=" <%= order.adults%>">
+                    <input type="hidden" name="children" value="<%= order.children%>">
+
+
+                    <div class="form-group owner">
+                        <label for="ownerName">Owner Name</label>
+                        <input type="text" class="form-control" id="ownerName" name="ownerName"
+                            placeholder="Owner's Full Name" required>
+                    </div>
+
+                    <div class="form-group" id="card-number-field">
+                        <label for="cardNumber">Card Number</label>
+                        <input type="text" class="form-control" id="cardNumber" name="cardNumber"
+                            placeholder="XXXX XXXX XXXX XXXX" required>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Expiration Date</label>
+                                <input type="text" class="form-control" name="expiryDate" id="expiryDate"
+                                    placeholder="MM/YYYY" required>
+
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group CVV">
+                                <label for="cvv">CVV</label>
+                                <input type="text" class="form-control" id="cvv" name="cvv" placeholder="XXX" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input class="form-check-input" type="checkbox" value="" id="savePaymentInfo"
+                            name="savePaymentInfo">
+                        <label class="form-check-label" for="savePaymentInfo">
+                            Save Payment Information to your account.
+                        </label>
+                    </div>
+                    <div class="form-group button">
+                        <button type="submit" class="btn btn-default" id="confirm-purchase">PAY &
+                            CONFIRM</button>
+                    </div>
+                </form>
+
+                <% } %>
+    </div>
+</div>
+
+
+
+<script>
+    document.getElementById('cardNumber').addEventListener('input', (e) => {
+
+        if (e.target.value.length <= 19) {
+            e.target.value = e.target.value.replace(/[^\dA-Z]/g, '').replace(/(.{4})/g, '$1 ').trim();
+        } else {
+            e.target.value = e.target.value.substr(0, 19);
+        }
+    });
+
+    document.getElementById('expiryDate').addEventListener('input', (e) => {
+
+        if (e.target.value.length <= 3) {
+            e.target.value = e.target.value.replace(/[^\dA-Z]/g, '').replace(/(.{2})/g, '$1/ ').trim();
+        } else {
+            e.target.value = e.target.value.substr(0, 7);
+        }
+    });
+
+    document.getElementById('cvv').addEventListener('input', (e) => {
+
+        if (e.target.value.length > 3) {
+            e.target.value = e.target.value.substr(0, 3);
+        }
+    });
+
+
+
+</script>

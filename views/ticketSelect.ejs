@@ -1,0 +1,140 @@
+<head>
+   
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+   href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="ticket.css">
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+   src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+   <link rel="stylesheet" href="ticket.css">
+</head>
+
+
+
+<div class="wrapper">
+
+
+   <div class="row header-font">
+      <h1>Select your tickets</h1>
+      <h6>Ticket reservations are limited to up to 10 tickets per order
+         <h6>Open from 10am to 10pm.</h6>
+      </h6>
+
+   </div>
+
+   <div style="overflow:hidden;">
+      <div class="form-group">
+         <div class="row form-box">
+            <div class="col-md-8">
+               <form method="POST" action='/ticket' id="ticketSelectForm" onSubmit="return checkForm()">
+
+                  <input class="datetimepicker12" type="datetime" id="datetimepicker12" name="ticketDate"
+                     placeholder="Pick date and time" required />
+
+                  <div class="row">
+                     <div class="col-md">
+                        <label> Adults </label>
+                     </div>
+                     <div class="col-md counter">
+                        <span>50 Rs</span>
+                        <div class="number-input">
+                           <button type="button"
+                              onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                              class=" icon-number ver"></button>
+                           <input class="number" type="number" min="0" max="10" id='Adults'
+                              value="<%= queries.adults?queries.adults:0 %>" name="adults" required />
+                           <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                              class="plus icon-number ver"></button>
+                        </div>
+
+                     </div>
+                  </div>
+
+                  <div class="row">
+                     <div class="col"> <label>Children</label></div>
+
+                     <div class="col-md counter"> <span>25 Rs</span>
+                        <div class="number-input">
+                           <button type="button"
+                              onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                              class=" icon-number ver"></button>
+                           <input class="number" type="number" min="0" max="10"
+                              value="<%= queries.children?queries.children:0 %>" id='Children' name="children"
+                              required />
+                           <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                              class="plus icon-number ver"></button>
+                        </div>
+
+
+
+
+
+
+                     </div>
+                     <p class="total"></p>
+                     <div class="confirm-button">
+                        <button type="submit" class="btn btn-default">Confirm</button>
+                     </div>
+
+
+
+
+               </form>
+
+            </div>
+         </div>
+      </div>
+      <script type="text/javascript">
+
+
+
+
+
+
+         $('#datetimepicker12').datetimepicker({
+
+            inline: true,
+            sideBySide: true,
+            keepOpen: true,
+            minDate: new Date(),
+            stepping: 60,
+            defaultDate: '<%=queries.date %>'
+         })
+
+
+
+
+
+
+         function displayVals() {
+            let Total = 0;
+            let Total1 = $('#Adults').val() * 50;
+            let Total2 = $('#Children').val() * 25;
+            Total = Total1 + Total2;
+            console.log("sum" + Total);
+
+            $("p").html("<b>Total: </b> " + Total + "  Rs");
+         }
+
+
+         $(".icon-number").click(displayVals);
+         displayVals();
+
+         function checkForm() {
+            if ($('#Children').val() == 0 && $('#Adults').val() == 0) {
+               return false;
+            }
+            return true;
+
+         }
+
+
+      </script>
+   </div>
+
+
+</div>

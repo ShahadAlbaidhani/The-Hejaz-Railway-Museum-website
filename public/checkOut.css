@@ -1,0 +1,30 @@
+.creditCardForm {
+    margin-top: 50px;
+}
+
+.form-group.button {
+    display: flex;
+    justify-content: flex-end;
+    margin: 20px 0;
+    margin-bottom: 50px;
+}
+
+.order-summary {
+    margin-top: 40px;
+}
+
+
+.payment {
+    margin-top: 35px;
+}
+
+.order-summary>hr {
+    margin-top: 35px;
+}
+
+
+#updatePaymentInfo,
+#savePaymentInfo {
+    margin-left: 2px;
+    margin-right: 5px;
+}

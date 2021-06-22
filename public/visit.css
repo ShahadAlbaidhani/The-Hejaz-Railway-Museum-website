@@ -1,0 +1,43 @@
+
+
+
+
+.container-fluid{
+    padding-top: 5%;
+    background-color: black;
+    color: white;
+}
+img{
+    width:20%;
+    margin-left: 10%;
+}
+
+.Visitors{
+    background-color: rgb(3, 3, 3);
+    color: white;
+    padding-bottom: 5%;
+
+}
+
+.table tr{
+    background-color: black;
+    color: white;
+
+
+}
+
+.tableSide{
+    background-color: black;
+    color: white; 
+    padding-bottom: 5%;
+}
+button{
+    background-color: rgb(185, 131, 14);
+    color: white;
+    padding: 14px 40px;
+    font-size: 20px;
+    border: none;
+    border-radius:40%;
+   
+
+}

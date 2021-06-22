@@ -1,0 +1,111 @@
+<div class="wrapper container w-50 mt-lg-5">
+
+  <form action="/signup" method="POST" class="needs-validation" novalidate>
+
+    <h2 class="mb-3">Sign Up </h2>
+    <div class="row">
+      <div class="form-group mb-4 col-md-6">
+        <label for="firstName">First Name:</label>
+        <input type="text" class="form-control shadow-sm " id="firstName" placeholder="First Name" name="firstName"
+          required value="<%= locals.oldBody?oldBody.firstName:'' %>">
+        <div class="valid-feedback">Valid.</div>
+        <div class="invalid-feedback">Please fill out this field.</div>
+      </div>
+      <div class="form-group mb-4 col-md-6">
+        <label for="lastName">Last Name:</label>
+        <input type="text" class="form-control shadow-sm" id="lastName" placeholder="Last Name" name="lastName" required
+          value="<%= locals.oldBody?oldBody.lastName:'' %>">
+        <div class="valid-feedback">Valid.</div>
+        <div class="invalid-feedback">Please fill out this field.</div>
+      </div>
+    </div>
+
+
+    <div class="form-group mb-4">
+      <label for="username">Username:</label>
+      <input type="text" class="form-control shadow-sm" id="username" placeholder="Username" name="username" required
+        value="<%= locals.oldBody?oldBody.username:'' %>">
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
+      <% if (errors && errors.username) { %>
+        <div class="invalid-feedback" style="display: block;position: static;margin-top: 0.45rem;">
+          <%= errors.username %>
+        </div>
+        <% } %>
+    </div>
+
+    <div class="form-group mb-4">
+      <label for="phone">Phone Number:</label>
+      <input type="tel" class="form-control shadow-sm" id="phone" placeholder="96655.." name="phone"
+        value="<%= locals.oldBody?oldBody.phone:'' %>" required>
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
+    </div>
+    <div class="form-group mb-4">
+      <label for="emailAddress">Email:</label>
+      <input type="email" class="form-control shadow-sm" id="emailAddress"
+        value="<%= locals.oldBody?oldBody.emailAddress:'' %>" placeholder="Enter email" name="emailAddress" required>
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
+      <% if (errors && errors.emailAddress) { %>
+        <div class="invalid-feedback" style="display: block;position: static;margin-top: 0.45rem;">
+          <%= errors.emailAddress %>
+        </div>
+        <% } %>
+    </div>
+    <div class="form-group mb-4">
+      <label for="password">Password:</label>
+      <input type="password" class="form-control shadow-sm" id="password" placeholder="Enter password" name="password"
+        required>
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
+    </div>
+    <div class="mx-auto">
+      <button type="submit" class="btn btn-dark  ">Submit</button>
+    </div>
+</div>
+
+</form>
+</div>
+<script>
+  // Disable form submissions if there are invalid fields
+  (function () {
+    'use strict';
+    window.addEventListener('load', function () {
+      // Get the forms we want to add validation styles to
+      var forms = document.getElementsByClassName('needs-validation');
+      // Loop over them and prevent submission
+      var validation = Array.prototype.filter.call(forms, function (form) {
+        form.addEventListener('submit', function (event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+</script>
+
+
+<% if (locals.messages) { %>
+  <%= locals.messages %>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <% if (locals.messages.failureFlash) { %>
+      <script>
+        Toastify({
+          text: "<%= locals.messages.failureFlash %>",
+          duration: 3000,
+          destination: "https://github.com/apvarun/toastify-js",
+          newWindow: true,
+          close: true,
+          gravity: "top", // `top` or `bottom`
+          position: "right", // `left`, `center` or `right`
+          backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+          stopOnFocus: true, // Prevents dismissing of toast on hover
+          onClick: function () { } // Callback after click
+        }).showToast();
+      </script>
+      <% }%>
+        <% } %>
